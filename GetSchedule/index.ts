@@ -99,9 +99,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
           startTime: slot.startTime(),
           endTime: slot.endTime()
         }
-      });
-      // for (let slot of schedule[day].map((slot:TimeZone)=> `${slot.startTime()} - ${slot.endTime()}`)) {
-      // console.log(`- ${slot}`);  
+      }); 
       context.res = {
         body: schedule
       }
@@ -111,14 +109,3 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 };
 
 export default httpTrigger;
-
-
-    // const name = (req.query.name || (req.body && req.body.name));
-    // const responseMessage = name
-    //     ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-    //     : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
-
-    // context.res = {
-    //     // status: 200, /* Defaults to 200 */
-    //     body: responseMessage
-    // };
