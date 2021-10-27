@@ -26,7 +26,11 @@ class TimeZone {
   }
 
   public endTime() {
-    return `${`${this.startHour + 2}`.padStart(2,'0')}:30`;
+    let endHour = this.startHour + 2;
+    if (endHour >= 24) {
+      endHour -= 24;
+    }
+    return `${`${endHour}`.padStart(2,'0')}:30`;
   }  
 }
 
