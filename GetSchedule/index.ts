@@ -110,15 +110,22 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
       body: "Please ensure you have set zone, stage and day"
     };
   } else {
-    let schedule = scheduleForZoneAndStage(zone, stage)[day].map(slot => {
-      return {
-        startTime: slot.startTime(),
-        endTime: slot.endTime()
+    let schedule = scheduleForZoneAndStage(zone, stage);
+    if (!schedule[day]) {
+      context.res = {
+        body: []
       }
-    }).sort((a, b) => a.startTime < b.startTime ? -1 : a.startTime == b.startTime ? 0 : 1);
+    } else {
+      let mappedSchedule = schedule[day].map(slot => {
+        return {
+          startTime: slot.startTime(),
+          endTime: slot.endTime()
+        }
+      }).sort((a, b) => a.startTime < b.startTime ? -1 : a.startTime == b.startTime ? 0 : 1);
 
-    context.res = {
-      body: schedule
+      context.res = {
+        body: mappedSchedule
+      }
     }
   }
 
